@@ -20,9 +20,9 @@ $('#upload-input').on('change', function(){
       // add the files to formData object for the data payload
       formData.append('uploads[]', file, file.name);
     }
-
+    var project="/Edward-project"
     $.ajax({
-      url: '/upload',
+      url: '/upload' + project,
       type: 'POST',
       data: formData,
       processData: false,
@@ -65,5 +65,11 @@ $('#upload-input').on('change', function(){
 $('.download-btn').on('click', function (){
   var link = document.createElement("a");
   link.href = "http://ec2-52-40-250-121.us-west-2.compute.amazonaws.com/download";
+  link.click();
+});
+
+$('.convert-btn').on('click', function (){
+  var link = document.createElement("a");
+  link.href = "http://ec2-52-40-250-121.us-west-2.compute.amazonaws.com/convert";
   link.click();
 });

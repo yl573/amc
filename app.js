@@ -6,6 +6,12 @@ try
   var fs = require('fs');
   var morgan = require('morgan');
 
+  var port;
+  if(process.platform === 'win32')
+    port = 8080;
+  else
+    port = 80;
+
 
   var app = express();
   app.use(morgan('dev'));
@@ -42,7 +48,8 @@ try
     })
   });
 
-  app.listen(8080);
+  app.listen(port);
+  console.log("server running on port " + port);
 
 }
 catch(err)

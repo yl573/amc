@@ -61,3 +61,9 @@ $('#upload-input').on('change', function(){
 
   }
 });
+
+$('.download-btn').on('click', function (){
+  var link = document.createElement("a");
+  link.href = "http://localhost:8080/download";
+  link.click();
+});

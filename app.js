@@ -1,47 +1,51 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-var formidable = require('formidable');
-var fs = require('fs');
+try
+{
+  var express = require('express');
+  var formidable = require('formidable');
+  var path = require('path');
+  var fs = require('fs');
+  var morgan = require('morgan');
 
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, 'views/index.html'));
-});
+  var app = express();
+  app.use(morgan('dev'));
+  app.use(express.static(__dirname));
 
-app.post('/upload', function(req, res){
+  app.use('/upload', function(req, res, next) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    var form = new formidable.IncomingForm();
+    form.multiples = true;
+    form.uploadDir = path.join(__dirname, '/files');
 
-  // create an incoming form object
-  var form = new formidable.IncomingForm();
+    form.on('file', function(field, file) {
+      fs.rename(file.path, path.join(form.uploadDir, file.name));
+      res.write('Your pdf ' + file.name + ' has been add!');
+    });
 
-  // specify that we want to allow the user to upload multiple files in a single request
-  form.multiples = true;
-
-  // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '/uploads');
-
-  // every time a file has been uploaded successfully,
-  // rename it to it's orignal name
-  form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
-  });
-
-  // log any errors that occur
-  form.on('error', function(err) {
+    form.on('error', function(err) {
     console.log('An error has occured: \n' + err);
+    });
+
+    form.on('end', function() {
+      res.end();
+    });
+
+    form.parse(req);  
   });
 
-  // once all the files have been uploaded, send a response to the client
-  form.on('end', function() {
-    res.end('success');
+  app.use('/download', function(req, res, next){ 
+    fs.readdir(__dirname + '/files', function(err, files) {
+      if (err) return;
+      var download_path = path.resolve('./files/' + files[0]);
+      console.log("download " + download_path);
+      res.download(download_path, 'bomba.pdf');
+    })
   });
 
-  // parse the incoming request containing the form data
-  form.parse(req);
+  app.listen(8080);
 
-});
-
-var server = app.listen(3000, function(){
-  console.log('Server listening on port 3000');
-});
+}
+catch(err)
+{
+  console.log(err);
+}

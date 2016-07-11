@@ -23,6 +23,12 @@ body {
   border: none;
 }
 
+.download-btn {
+  color: #ffffff;
+  background-color: #F89406;
+  border: none;
+}
+
 .upload-btn:hover,
 .upload-btn:focus,
 .upload-btn:active,
@@ -31,6 +37,16 @@ body {
   background-color: #FA8900;
   border: none;
 }
+
+.download-btn:hover,
+.download-btn:focus,
+.download-btn:active,
+.download-btn.active {
+  color: #ffffff;
+  background-color: #FA8900;
+  border: none;
+}
+
 
 h4 {
   padding-bottom: 30px;

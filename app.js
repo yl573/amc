@@ -7,10 +7,17 @@ try
   var morgan = require('morgan');
 
   var port;
+  var server;
   if(process.platform === 'win32')
+  {
     port = 8080;
+    server = "localhost";
+  }
   else
+  {
     port = 80;
+    server = "ec2-52-40-250-121.us-west-2.compute.amazonaws.com";
+  }
 
 
   var app = express();
@@ -48,8 +55,10 @@ try
     })
   });
 
-  app.listen(port);
-  console.log("server running on port " + port);
+  app.listen(port, server, function() {
+    console.log("server running on " + server + " port:" + port); 
+  });
+
 
 }
 catch(err)

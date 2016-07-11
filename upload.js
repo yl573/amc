@@ -64,6 +64,6 @@ $('#upload-input').on('change', function(){
 
 $('.download-btn').on('click', function (){
   var link = document.createElement("a");
-  link.href = "http://localhost:8080/download";
+  link.href = "http://ec2-52-40-250-121.us-west-2.compute.amazonaws.com/download";
   link.click();
 });

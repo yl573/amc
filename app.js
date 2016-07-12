@@ -98,7 +98,6 @@ try {
         fs.readdir(__dirname + '/Projects/' + req.params.project_name, function(err, files) {
             if (err) 
             {
-                res.writeHead(200, {'Content-Type': 'text/plain'});
                 res.end("Project not found");
             }
 
@@ -106,13 +105,16 @@ try {
             for (var i = 0; i < files.length; i++) 
             {
                 console.log(files[i]);
-                if (files[i].endsWith('.tex'))
+                // if(fs.stats.isfile())
+                if (path.extname(files[i]) == ".tex")
+                {
                     target_file = files[i];
+                    console.log("file found: " + target_file);
+                }
             }
 
             if (target_file === "not found") 
             {
-                res.writeHead(200, {'Content-Type': 'text/plain'});
                 res.end("No .tex file availiable");
             } 
             else 
@@ -135,11 +137,11 @@ function init_project(project_name) {
     if (test) {
         exec('win_init_project.bat ' + project_name);
     } else {
-        exec('lin_init_project.sh' + project_name);
+        exec('sudo sh ./lin_init_project.sh ' + project_name);
     }
 }
 
 function prepare_pdf(project_name, latex_file) {
-    exec('auto-multiple-choice prepare --mode s --prefix ./' + project_name + ' ./' + project_name + '/' + latex_file)
-        // console.log('auto-multiple-choice prepare --mode s --prefix ./' + project_name + ' ./' + project_name + '/' + latex_file);
+    exec('auto-multiple-choice prepare --mode s --prefix ./Projects/' + project_name + ' ./Projects/' + project_name + '/' + latex_file)
+    console.log('auto-multiple-choice prepare --mode s --prefix ./Projects/' + project_name + ' ./Projects/' + project_name + '/' + latex_file)
 }

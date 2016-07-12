@@ -6,7 +6,7 @@ if (process.platform === 'win32') {
 } else {
     test = false;
     port = 80;
-    server = "ec2-52-40-250-121.us-west-2.compute.amazonaws.com";
+    server = "automark.westeurope.cloudapp.azure.com";
 }
 
 try {

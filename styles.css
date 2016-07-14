@@ -1,4 +1,4 @@
-.btn:focus, .upload-btn:focus{
+.btn:focus{
   outline: 0 !important;
 }
 
@@ -17,31 +17,17 @@ body {
   margin-top: 80px;
 }
 
-.upload-btn {
+.btn {
+  margin: 5px;
   color: #ffffff;
   background-color: #F89406;
   border: none;
 }
 
-.download-btn {
-  color: #ffffff;
-  background-color: #F89406;
-  border: none;
-}
-
-.upload-btn:hover,
-.upload-btn:focus,
-.upload-btn:active,
-.upload-btn.active {
-  color: #ffffff;
-  background-color: #FA8900;
-  border: none;
-}
-
-.download-btn:hover,
-.download-btn:focus,
-.download-btn:active,
-.download-btn.active {
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active {
   color: #ffffff;
   background-color: #FA8900;
   border: none;
